@@ -77,8 +77,10 @@ module Rails #:nodoc:
       # This will happen every request in development, once in ther other
       # environments.
       initializer "preload all application models" do |app|
-        config.to_prepare do
-          ::Rails::Mongoid.load_models(app)
+        unless ::Rails.env.test?
+          config.to_prepare do
+            ::Rails::Mongoid.load_models(app)
+          end
         end
       end
 
